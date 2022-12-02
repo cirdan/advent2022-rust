@@ -1,14 +1,13 @@
 use Move::{Paper, Rock, Scissors};
 use crate::day2::{Player};
 
-#[derive(Copy, Clone)]
+#[derive(Clone,Copy)]
 pub struct RPS {
     pub player_1: Player,
     pub player_2: Player,
 }
 
-#[derive(PartialEq)]
-#[derive(Debug)]
+#[derive(PartialEq, Debug, Copy, Clone)]
 pub enum Move {
     Rock,
     Paper,
@@ -18,8 +17,8 @@ pub enum Move {
 
 impl RPS {
     pub(crate) fn winner(self,
-                         move_player_1: &Move,
-                         move_player_2: &Move,
+                         move_player_1: Move,
+                         move_player_2: Move,
     ) -> Option<Player> {
         match move_player_1 {
             Paper => match move_player_2 {
@@ -51,36 +50,36 @@ mod tests {
     #[test]
     fn rock_looses_against_paper() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(Elf), rps.winner(&Rock, &Paper))
+        assert_eq!(Option::from(Elf), rps.winner(Rock, Paper))
     }
 
     #[test]
     fn rock_wins_against_scissors() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(Me), rps.winner(&Rock, &Scissors))
+        assert_eq!(Option::from(Me), rps.winner(Rock, Scissors))
     }
 
     #[test]
     fn rock_rock_draw() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(None), rps.winner(&Rock, &Rock))
+        assert_eq!(Option::from(None), rps.winner(Rock, Rock))
     }
 
     #[test]
     fn paper_looses_against_scissors() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(Elf), rps.winner(&Paper, &Scissors))
+        assert_eq!(Option::from(Elf), rps.winner(Paper, Scissors))
     }
 
     #[test]
     fn paper_paper_draw() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(None), rps.winner(&Paper, &Paper))
+        assert_eq!(Option::from(None), rps.winner(Paper, Paper))
     }
 
     #[test]
     fn scissors_scissors_draw() {
         let rps = RPS { player_1: Me, player_2: Elf };
-        assert_eq!(Option::from(None), rps.winner(&Scissors, &Scissors))
+        assert_eq!(Option::from(None), rps.winner(Scissors, Scissors))
     }
 }
